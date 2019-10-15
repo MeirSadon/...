@@ -9,14 +9,19 @@ namespace FlightManagementProject.DAO
     // Interface For Anonymous User (And Over).
     public interface IAnonymousUserFacade
     {
-        IList<Flight> GetAllFlights();
+        AirlineCompany GetAirlineByUserName(string name);
         IList<AirlineCompany> GetAllAirlineCompanies();
-        Dictionary<Flight, int> GetAllFlightsVacancy();
+
         Flight GetFlightById(int id);
+        Dictionary<Flight, int> GetAllFlightsVacancy();
         IList<Flight> GetFlightsByOriginCountry(int countryCode);
         IList<Flight> GetFlightsByDestinationCountry(int countryCode);
         IList<Flight> GetFlightsByDepartureDate(DateTime departureDate);
         IList<Flight> GetFlightsByLandingDate(DateTime landingDate);
-        AirlineCompany GetAirlineByUserName(string name);
+        IList<Flight> GetAllFlights();
+
+        Country GetCountryById(int id);
+        Country GetCountryByName(string userName);
+        IList<Country> GetAllCountries();
     }
 }

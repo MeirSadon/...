@@ -28,9 +28,13 @@ namespace FlightManagementProject.Facade
         void ForceChangePasswordForAirline(LoginToken<Administrator> token, AirlineCompany airline, string newPassword);
         void ForceChangePasswordForCustomer(LoginToken<Administrator> token, Customer customer, string newPassword);
 
+        Administrator GetAdminById(LoginToken<Administrator> token, int id);
         Administrator GetAdminByUserName(LoginToken<Administrator> token, string userName);
+        AirlineCompany GetAirlineById(LoginToken<Administrator> token, int id);
         AirlineCompany GetAirlineByUserName(LoginToken<Administrator> token, string userName);
+        Customer GetCustomerById(LoginToken<Administrator> token, int id);
         Customer GetCustomerByUserName(LoginToken<Administrator> token, string userName);
+        IList<Customer> GetAllCustomers(LoginToken<Administrator> token);
 
         bool UserIsValid(LoginToken<Administrator> token);
     }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace FlightManagementProject.DAO
 {
     // Class With All Funtions(Of Country) For MSSQL Data Base.
+    
     internal class CountryDAOMSSQL : ICountryDAO
     {
         private IUserDAO _backgroundDAO = new UserDAOMSSQL();
@@ -22,14 +23,14 @@ namespace FlightManagementProject.DAO
             long newId = 0;
             using (SqlConnection conn = new SqlConnection(FlyingCenterConfig.CONNECTION_STRING))
             {
-                using (SqlCommand cmd2 = new SqlCommand($"Add_Country", conn))
+                using (SqlCommand cmd = new SqlCommand($"Add_Country", conn))
                 {
-                    cmd2.Connection.Open();
+                    cmd.Connection.Open();
 
-                    cmd2.CommandType = CommandType.StoredProcedure;
-                    cmd2.Parameters.AddWithValue("@Country_Name", t.Country_Name);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Country_Name", t.Country_Name);
 
-                    newId = (long)cmd2.ExecuteScalar();
+                    newId = (long)cmd.ExecuteScalar();
                 }
             }
             return newId;

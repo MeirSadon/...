@@ -259,7 +259,7 @@ namespace FlightManagementProject.Facade
                 _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Anonymous User Tried To Update Some Customer. Number Id: {customer.Id} ({customer.User_Name}).", false);
         }
 
-        // Update Details For Some Customer.
+        // Update Details For Some Country.
         public void UpdateCountryDetails(LoginToken<Administrator> token, Country country)
         {
             if (UserIsValid(token) && country != null)
@@ -354,35 +354,16 @@ namespace FlightManagementProject.Facade
                 _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Anonymous User Tried To Change Password In Force For Some Customer. Number Id: {customer.Id} ({customer.User_Name}).", false);
 
         }
-        
-        // Search Airline Company By UserName.
-        public AirlineCompany GetAirlineByUserName(LoginToken<Administrator> token, string userName)
-        {
-            AirlineCompany airline = null;
-            if (UserIsValid(token))
-            {
-                User airlineUser = _userDAO.GetUserByUserName(userName);
-                if(airlineUser != null)
-                {
-                   airline = _airlineDAO.GetById(airlineUser.Id);
-                }
-            }
-            return airline;
-        }
 
-        // Search Customer By UserName.
-        public Customer GetCustomerByUserName(LoginToken<Administrator> token, string userName)
+        // Search Admin By Id.
+        public Administrator GetAdminById(LoginToken<Administrator> token, int id)
         {
-            Customer customer = null;
+            Administrator admin = new Administrator();
             if (UserIsValid(token))
             {
-                User customerUser = _userDAO.GetUserByUserName(userName);
-                if (customerUser != null)
-                {
-                    customer = _customerDAO.GetById(customerUser.Id);
-                }
+                admin = _adminDAO.GetById(id);
             }
-            return customer;
+                return admin;
         }
 
         // Search Admin By UserName.
@@ -399,6 +380,69 @@ namespace FlightManagementProject.Facade
                 }
             }
             return admin;
+        }
+
+        // Search Airline Company By Id.
+        public AirlineCompany GetAirlineById(LoginToken<Administrator> token, int id)
+        {
+            AirlineCompany airline = new AirlineCompany();
+            if (UserIsValid(token))
+            {
+                airline = _airlineDAO.GetById(id);
+            }
+            return airline;
+        }
+
+        // Search Airline Company By UserName.
+        public AirlineCompany GetAirlineByUserName(LoginToken<Administrator> token, string userName)
+        {
+            AirlineCompany airline = null;
+            if (UserIsValid(token))
+            {
+                User airlineUser = _userDAO.GetUserByUserName(userName);
+                if(airlineUser != null)
+                {
+                   airline = _airlineDAO.GetById(airlineUser.Id);
+                }
+            }
+            return airline;
+        }
+
+        // Search Customer By Id.
+        public Customer GetCustomerById(LoginToken<Administrator> token, int id)
+        {
+            Customer customer = new Customer();
+            if (UserIsValid(token))
+            {
+                customer = _customerDAO.GetById(id);
+            }
+            return customer;
+        }
+        
+        // Search Customer By UserName.
+        public Customer GetCustomerByUserName(LoginToken<Administrator> token, string userName)
+        {
+            Customer customer = null;
+            if (UserIsValid(token))
+            {
+                User customerUser = _userDAO.GetUserByUserName(userName);
+                if (customerUser != null)
+                {
+                    customer = _customerDAO.GetById(customerUser.Id);
+                }
+            }
+            return customer;
+        }
+
+        // Search All Customers.
+        public IList<Customer> GetAllCustomers(LoginToken<Administrator> token)
+        {
+            IList<Customer> customers = null;
+            if (UserIsValid(token))
+            {
+                    customers = _customerDAO.GetAll();
+            }
+            return customers;
         }
 
         // Check If User Admin That Sent Is Valid.

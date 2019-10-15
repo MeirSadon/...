@@ -24,9 +24,9 @@ namespace FlightManagementProject
             facade = new AnonymousUserFacade();
 
             // Default Admin.
-            if (userName.ToUpper() == FlyingCenterConfig.ADMIN_NAME)
+            if (userName.ToUpper() == FlyingCenterConfig.ADMIN_NAME.ToUpper())
             {
-                if (password == FlyingCenterConfig.ADMIN_PASSWORD)
+                if (password.ToUpper() == FlyingCenterConfig.ADMIN_PASSWORD.ToUpper())
                 {
                     token = new LoginToken<Administrator>
                     {
@@ -51,7 +51,7 @@ namespace FlightManagementProject
             User user = _userDAO.GetUserByUserName(userName);
             if (user != null)
             {
-                if (password == user.Password.ToUpper())
+                if (password.ToUpper() == user.Password.ToUpper())
                 {
                     switch (user.MyType)
                     {

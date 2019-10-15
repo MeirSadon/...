@@ -12,28 +12,35 @@ namespace FlightManagementProject.Facade
     public class AnonymousUserFacade : FacadeBase, IAnonymousUserFacade
     {
 
+        // Get Some Airline Company By User Name.
+        public AirlineCompany GetAirlineByUserName(string userName)
+        {
+            AirlineCompany airline = null;
+                User airlineUser = _userDAO.GetUserByUserName(userName);
+                if (airlineUser != null)
+                {
+                    airline = _airlineDAO.GetById(airlineUser.Id);
+                }
+            return airline;
+        }
+        
         // Get All Airline Companies.
         public IList<AirlineCompany> GetAllAirlineCompanies()
         {
             return _airlineDAO.GetAll();
         }
 
-        // Get All Flights
-        public IList<Flight> GetAllFlights()
-        {
-            return _flightDAO.GetAll();
-        }
-
-        // Get All Flights With At Least One Ticket.
-        public Dictionary<Flight, int> GetAllFlightsVacancy()
-        {
-            return _flightDAO.GetAllFlightsVacancy();
-        }
 
         // Get Some Flight By Id.
         public Flight GetFlightById(int id)
         {
             return _flightDAO.GetById(id);
+        }
+        
+        // Get All Flights With At Least One Ticket.
+        public Dictionary<Flight, int> GetAllFlightsVacancy()
+        {
+            return _flightDAO.GetAllFlightsVacancy();
         }
 
         //Get All Flights By Departure Time.
@@ -59,24 +66,30 @@ namespace FlightManagementProject.Facade
         {
             return _flightDAO.GetFlightsByOriginCounty(countryCode);
         }
+        
+        // Get All Flights
+        public IList<Flight> GetAllFlights()
+        {
+            return _flightDAO.GetAll();
+        }
 
+
+        //Get Country By Id.
+        public Country GetCountryById(int id)
+        {
+            return _countryDAO.GetById(id);
+        }
+        
         // Get Country By Name.
         public Country GetCountryByName(string name)
         {
             return _countryDAO.GetByName(name);
         }
 
-        // Get Some Airline Company By User Name.
-        public AirlineCompany GetAirlineByUserName(string userName)
+        //Get All Countries.
+        public IList<Country> GetAllCountries()
         {
-            AirlineCompany airline = null;
-                User airlineUser = _userDAO.GetUserByUserName(userName);
-                if (airlineUser != null)
-                {
-                    airline = _airlineDAO.GetById(airlineUser.Id);
-                }
-            return airline;
+            return _countryDAO.GetAll();
         }
-
     }
 }

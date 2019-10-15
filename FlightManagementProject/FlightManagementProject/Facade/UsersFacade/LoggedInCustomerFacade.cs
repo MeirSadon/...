@@ -27,7 +27,7 @@ namespace FlightManagementProject.Facade
                 else
                 {
                     _backgroundDAO.AddNewAction(Categories.Customers | Categories.Tickets | Categories.Adds, $"Customer: {token.User.User_Name} Tried To Purchase New Ticket (Flight: {flight.Id}).", false);
-                    throw new OutOfTicketsException("Sorry But The Tickets Are Over");
+                    throw new OutOfTicketsException($"Sorry But The Tickets Are Over For This Flight (Flight Number: {flight.Id}. From: {flight.Origin_Country_Code} To: {flight.Destination_Country_Code} At: {flight.Departure_Time}.)");
                 }
             }
             else

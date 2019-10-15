@@ -55,8 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAO\MSSQL\BackgroundDAOMSSQL.cs" />
-    <Compile Include="DAO\Interfaces\IBackgroundDAO.cs" />
+    <Compile Include="DAO\MSSQL\MaintenanceDAOMSSQL.cs" />
+    <Compile Include="DAO\Interfaces\IMaintenanceDAO .cs" />
     <Compile Include="DAO\MSSQL\AdministratorDAOMSSQL.cs" />
     <Compile Include="DAO\MSSQL\UserDAOMSSQL.cs" />
     <Compile Include="Enums\Categories.cs" />
@@ -89,26 +89,26 @@
     <Compile Include="Exceptions\PasswordNotMatchException.cs" />
     <Compile Include="Exceptions\OutOfTicketsException.cs" />
     <Compile Include="Exceptions\TooLateToCancelTicketException.cs" />
-    <Compile Include="Poco And User\Administrator.cs" />
-    <Compile Include="Poco And User\AirlineCompany.cs" />
+    <Compile Include="PocoAndUser\Administrator.cs" />
+    <Compile Include="PocoAndUser\AirlineCompany.cs" />
     <Compile Include="Class1.cs" />
-    <Compile Include="Poco And User\Country.cs" />
-    <Compile Include="Poco And User\Customer.cs" />
-    <Compile Include="Poco And User\Flight.cs" />
+    <Compile Include="PocoAndUser\Country.cs" />
+    <Compile Include="PocoAndUser\Customer.cs" />
+    <Compile Include="PocoAndUser\Flight.cs" />
     <Compile Include="DAO\Interfaces\IAdministratorDAO.cs" />
     <Compile Include="DAO\Interfaces\IBasicDB.cs" />
     <Compile Include="DAO\Interfaces\ICustomerDAO.cs" />
     <Compile Include="DAO\Interfaces\IFlightDAO.cs" />
     <Compile Include="Login\ILoginService.cs" />
-    <Compile Include="Poco And User\Interfaces\IPoco.cs" />
+    <Compile Include="PocoAndUser\Interfaces\IPoco.cs" />
     <Compile Include="DAO\Interfaces\ITicketDAO.cs" />
-    <Compile Include="Poco And User\Interfaces\IUser.cs" />
+    <Compile Include="PocoAndUser\Interfaces\IUser.cs" />
     <Compile Include="Login\LoginService.cs" />
     <Compile Include="Login\LoginToken.cs" />
-    <Compile Include="Enums\Types.cs" />
-    <Compile Include="Poco And User\User.cs" />
+    <Compile Include="Enums\UserTypes.cs" />
+    <Compile Include="PocoAndUser\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Poco And User\Ticket.cs" />
+    <Compile Include="PocoAndUser\Ticket.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

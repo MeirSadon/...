@@ -18,7 +18,7 @@ namespace FlightManagementProject.DAO
         protected IFlightDAO _flightDAO;
         protected ITicketDAO _ticketDAO;
         protected ICountryDAO _countryDAO;
-        protected IBackgroundDAO _backgroundDAO;
+        protected IMaintenanceDAO _backgroundDAO;
 
         public FacadeBase()
         {
@@ -29,7 +29,7 @@ namespace FlightManagementProject.DAO
             _flightDAO = new FlightDAOMSSQL();
             _ticketDAO = new TicketDAOMSSQL();
             _countryDAO = new CountryDAOMSSQL();
-            _backgroundDAO = new BackgroundDAOMSSQL();
+            _backgroundDAO = new MaintenanceDAOMSSQL();
         }
     }
 }

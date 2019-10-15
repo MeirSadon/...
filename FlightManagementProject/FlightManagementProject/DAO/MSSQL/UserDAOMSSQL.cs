@@ -103,6 +103,7 @@ namespace FlightManagementProject.DAO
             {
                 using (SqlConnection conn = new SqlConnection(FlyingCenterConfig.CONNECTION_STRING))
                 {
+
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand($"Select * from Users where User_Name = '{userName}'", conn))
                     {
