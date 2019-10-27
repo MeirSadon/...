@@ -63,7 +63,7 @@
     <Compile Include="DAO\MSSQL\CountryDAOMSSQL.cs" />
     <Compile Include="DAO\MSSQL\CustomerDAOMSSQL.cs" />
     <Compile Include="DAO\Interfaces\IUserDAO.cs" />
-    <Compile Include="Exceptions\UserNameIsAlreadyExistException.cs" />
+    <Compile Include="Exceptions\UserAlreadyExistException.cs" />
     <Compile Include="Facade\UsersFacade\AnonymousUserFacade.cs" />
     <Compile Include="Exceptions\CentralAdministratorActionsException.cs" />
     <Compile Include="Facade\UsersFacade\FacadeBase.cs" />

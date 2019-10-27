@@ -31,7 +31,6 @@ namespace FlightManagementProject.Facade
         Administrator GetAdminById(LoginToken<Administrator> token, int id);
         Administrator GetAdminByUserName(LoginToken<Administrator> token, string userName);
         AirlineCompany GetAirlineById(LoginToken<Administrator> token, int id);
-        AirlineCompany GetAirlineByUserName(LoginToken<Administrator> token, string userName);
         Customer GetCustomerById(LoginToken<Administrator> token, int id);
         Customer GetCustomerByUserName(LoginToken<Administrator> token, string userName);
         IList<Customer> GetAllCustomers(LoginToken<Administrator> token);

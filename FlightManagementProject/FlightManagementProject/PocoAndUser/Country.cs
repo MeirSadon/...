@@ -50,5 +50,10 @@ namespace FlightManagementProject
         {
             return (int)this.Id;
         }
+
+        public override string ToString()
+        {
+            return $"Country Number: {Id}. Name: {Country_Name}.";
+        }
     }
 }

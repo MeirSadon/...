@@ -106,8 +106,22 @@ namespace FlightManagementProject.Facade
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Anonymous User Tried To Change Password For Some Custmer. Number Id: {token.User.Id} ({token.User.User_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Anonymous User Tried To Change Password For Some Custmer. Id: {token.User.Id} ({token.User.User_Name}).", false);
 
+        }
+
+        // Search Some Ticket For Current Customer(If The Ticket Belong To Current Customer).
+        public Ticket GetTicketById(LoginToken<Customer> token, int id)
+        {
+            Ticket ticket = new Ticket();
+            if (UserIsValid(token))
+            {
+                ticket = _ticketDAO.GetById(id);
+            }
+            if (ticket != null && ticket.Customer_Id == token.User.Id)
+                return ticket;
+            else
+                throw new TicketNotMatchException("No Flight Ticket Found In Your List Tickets With The Sent ID.");
         }
 
         // Search All The Flights For Current Customer.

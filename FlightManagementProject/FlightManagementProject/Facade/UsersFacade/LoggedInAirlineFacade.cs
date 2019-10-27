@@ -68,7 +68,7 @@ namespace FlightManagementProject.Facade
                 else
                 {
                     _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Updates, $"Company: {token.User.User_Name} Tried To Update Her Details.", false);
-                    throw new UserNotExistException($"Sorry, But '{token.User.User_Name}' Doe's Not Exist.");
+                    throw new UserNotExistException($"Sorry, But '{token.User.User_Name}' Does Not Exist.");
                 }
             }
             else
@@ -76,7 +76,7 @@ namespace FlightManagementProject.Facade
 
         }
 
-        // Change Password.
+        // Change Password For Current Company.
         public void ChangeMyPassword(LoginToken<AirlineCompany> token, string oldPassword, string newPassword)
         {
             if (UserIsValid(token))
@@ -97,7 +97,7 @@ namespace FlightManagementProject.Facade
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Updates, $"Anonymous User Tried To Change Password For Some Airline Company. Number Id: {token.User.Id} ({token.User.User_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Updates, $"Anonymous User Tried To Change Password For Some Airline Company. Id: {token.User.Id} ({token.User.User_Name}).", false);
         }
 
         //Update Flight Of Current Airline.
@@ -110,7 +110,11 @@ namespace FlightManagementProject.Facade
                     _flightDAO.Update(flight);
                     _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Flights | Categories.Updates, $"Comapny: {token.User.User_Name} Tried To UPDATE Some Flight From Her Flights List.", true);
                 }
-                _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Flights | Categories.Updates, $"Comapny: {token.User.User_Name} Tried To UPDATE Some Flight From Some Flights List.", false);
+                else
+                {
+                    _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Flights | Categories.Updates, $"Comapny: {token.User.User_Name} Tried To UPDATE Some Flight Of Another Company.", false);
+                    throw new FlightNotMatchException($"Sorry, But You Can Update Only Flights Of This Company.");
+                }
             }
             else
                 _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Flights | Categories.Updates, $"Anonymous User Tried To UPDATE Some Flight From Some Company.", false);
@@ -126,7 +130,7 @@ namespace FlightManagementProject.Facade
             }
             return flights;
         }
-        
+
         // Search All Tickets Of Current Airline.
         public IList<Ticket> GetAllTicketsByAirline(LoginToken<AirlineCompany> token)
         {

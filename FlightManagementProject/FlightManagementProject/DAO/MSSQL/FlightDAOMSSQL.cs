@@ -67,7 +67,7 @@ namespace FlightManagementProject.DAO
             using (SqlConnection conn = new SqlConnection(FlyingCenterConfig.CONNECTION_STRING))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand($"Update Flights set AirlineCompany_Id = {t.AirLineCompany_Id},Origin_Country_Code = {t.Origin_Country_Code}, " +
+                using (SqlCommand cmd = new SqlCommand($"Update Flights set Origin_Country_Code = {t.Origin_Country_Code}, " +
                     $"Destination_Country_Code = {t.Destination_Country_Code}, Departure_Time = '{t.Departure_Time.ToString(formatDate)}' ,Landing_Time = '{t.Landing_Time.ToString(formatDate)}' ," +
                     $"Remaining_Tickets = {t.Remaining_Tickets} where Id = {t.Id}", conn))
                 {

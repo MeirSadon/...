@@ -15,7 +15,7 @@ namespace FlightManagementProject
         public long Id { get; set; }
         public string Airline_Name { get; set; }
         public string User_Name { get; set; }
-        public string Password { get; private set; }
+        public string Password { get; set; }
         public long Country_Code { get; set; }
 
         //Empty Constractor For Read From Sql.

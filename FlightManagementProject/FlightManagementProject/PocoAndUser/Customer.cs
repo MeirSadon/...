@@ -14,7 +14,7 @@ namespace FlightManagementProject
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string User_Name { get; set; }
-        public string Password { get; private set; }
+        public string Password { get; set; }
         public string Address { get; set; }
         public string Phone_No { get; set; }
         public string Credit_Card_Number { get; set; }

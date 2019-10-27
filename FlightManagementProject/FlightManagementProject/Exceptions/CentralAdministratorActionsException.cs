@@ -4,21 +4,21 @@ using System.Runtime.Serialization;
 namespace FlightManagementProject.Facade
 {
     [Serializable]
-    public class CentralAdministratorActionsException : ApplicationException
+    public class CentralAdministratorException : ApplicationException
     {
-        public CentralAdministratorActionsException()
+        public CentralAdministratorException()
         {
         }
 
-        public CentralAdministratorActionsException(string message) : base(message)
+        public CentralAdministratorException(string message) : base(message)
         {
         }
 
-        public CentralAdministratorActionsException(string message, Exception innerException) : base(message, innerException)
+        public CentralAdministratorException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
-        protected CentralAdministratorActionsException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected CentralAdministratorException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

@@ -45,6 +45,7 @@ namespace FlightManagementProject.DAO
             }
         }
 
+        // Change UserName For Some User.
         public void UpdateUserName(string oldUserName, string newUserName)
         {
             using (SqlConnection conn = new SqlConnection(FlyingCenterConfig.CONNECTION_STRING))

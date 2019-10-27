@@ -13,8 +13,6 @@ namespace FlightManagementProject.DAO
     
     internal class CountryDAOMSSQL : ICountryDAO
     {
-        private IUserDAO _backgroundDAO = new UserDAOMSSQL();
-
         //====== Crud Commands ======//
 
         // Add New Country.

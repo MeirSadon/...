@@ -12,7 +12,7 @@ namespace FlightManagementProject
         public long Admin_Number { get; set; }
         public long Id { get; set; }
         public string User_Name { get; set; }
-        public string Password { get; private set; }
+        public string Password { get; set; }
 
         //Empty Constractor For Read From Sql.
         public Administrator()

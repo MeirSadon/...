@@ -25,12 +25,12 @@ namespace FlightManagementProject.Facade
                     _userDAO.AddUserName(new User(admin.User_Name, admin.Password, UserType.Administrator), out long userId);
                     admin.Id = userId;
                     adminNumber = _adminDAO.Add(admin);
-                    _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Administrator. Number Id: {admin.Id} ({admin.User_Name}).", false);
+                    _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Administrator. Id: {admin.Id} ({admin.User_Name}).", false);
                 }
                 else
                 {
-                    _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Administrator. Number Id: {admin.Id} ({admin.User_Name}).", false);
-                    throw new UserIsAlreadyExistException($"Sorry, But '{admin.User_Name}' Is Already Exist.");
+                    _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Administrator. Id: {admin.Id} ({admin.User_Name}).", false);
+                    throw new UserAlreadyExistException($"Sorry, But '{admin.User_Name}' Already Exist.");
                 }
             }
             else
@@ -50,16 +50,16 @@ namespace FlightManagementProject.Facade
                     _userDAO.AddUserName(new User(airline.User_Name, airline.Password, UserType.Airline), out long userId);
                     airline.Id = userId;
                     airlineNumber = _airlineDAO.Add(airline);
-                    _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Airline Company. Number Id: {airline.Id} ({airline.User_Name}).", true);
+                    _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Airline Company. Id: {airline.Id} ({airline.User_Name}).", true);
                 }
                 else
                 {
-                    _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Airline Company. Number Id: {airline.Id} ({airline.User_Name}).", true);
-                    throw new UserIsAlreadyExistException($"Sorry, But '{airline.User_Name}' Is Already Exist.");
+                    _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Airline Company. Id: {airline.Id} ({airline.User_Name}).", true);
+                    throw new UserAlreadyExistException($"Sorry, But '{airline.User_Name}' Already Exist.");
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Adds, $"Anonymous User Tried To Create New Airline Company. Number Id: {airline.Id} ({airline.User_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Adds, $"Anonymous User Tried To Create New Airline Company. Id: {airline.Id} ({airline.User_Name}).", false);
             return airlineNumber;
         }
 
@@ -75,17 +75,17 @@ namespace FlightManagementProject.Facade
                     _userDAO.AddUserName(new User(customer.User_Name, customer.Password, UserType.Customer), out long userId);
                     customer.Id = userId;
                     customerNumber = _customerDAO.Add(customer);
-                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Customer. Number Id: {customer.Id} ({customer.User_Name}).", true);
+                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Customer. Id: {customer.Id} ({customer.User_Name}).", true);
 
                 }
                 else
                 {
-                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Customer. Number Id: {customer.Id} ({customer.User_Name}).", false);
-                    throw new UserIsAlreadyExistException($"Sorry, But '{customer.User_Name}' Is Already Exist.");
+                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Adds, $"Admin {token.User.User_Name} Tried To Create New Customer. Id: {customer.Id} ({customer.User_Name}).", false);
+                    throw new UserAlreadyExistException($"Sorry, But '{customer.User_Name}' Already Exist.");
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Adds, $"Anonymous User Tried To Create New Customer. Number Id: {customer.Id} ({customer.User_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Adds, $"Anonymous User Tried To Create New Customer. Id: {customer.Id} ({customer.User_Name}).", false);
             return customerNumber;
         }
 
@@ -96,10 +96,10 @@ namespace FlightManagementProject.Facade
             if (UserIsValid(token) && country != null)
             {
                 newId = _countryDAO.Add(country);
-                _backgroundDAO.AddNewAction(Categories.Countries | Categories.Adds, $"Admin: {token.User.User_Name} Tried To Create New Country. Number Id: {newId} ({country.Country_Name}).", true);
+                _backgroundDAO.AddNewAction(Categories.Countries | Categories.Adds, $"Admin: {token.User.User_Name} Tried To Create New Country. Id: {newId} ({country.Country_Name}).", true);
             }
             else
-                _backgroundDAO.AddNewAction(Categories.Countries | Categories.Adds, $"Anonymous User Tried To Create New Country. Number Id: {country.Id} ({country.Country_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.Countries | Categories.Adds, $"Anonymous User Tried To Create New Country. Id: {country.Id} ({country.Country_Name}).", false);
 
             return newId;
         }
@@ -114,16 +114,16 @@ namespace FlightManagementProject.Facade
                 {
                     _adminDAO.Remove(admin);
                     _userDAO.RemoveUserName(adminUser);
-                    _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Deletions, $"Admin {token.User.User_Name} Try To Delete Some Admin. Number Id: {admin.Id} ({admin.User_Name}).", true);
+                    _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Deletions, $"Admin {token.User.User_Name} Tried To Delete Some Admin. Id: {admin.Id} ({admin.User_Name}).", true);
                 }
                 else
                 {
-                    _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Deletions, $"Admin {token.User.User_Name} Try To Delete Some Admin. Number Id: {admin.Id} ({admin.User_Name}).", false);
-                    throw new UserNotExistException($"Sorry, But '{admin.User_Name}' Is Not Exist.");
+                    _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Deletions, $"Admin {token.User.User_Name} Tried To Delete Some Admin. Id: {admin.Id} ({admin.User_Name}).", false);
+                    throw new UserNotExistException($"Sorry, But '{admin.User_Name}' Does Not Exist.");
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Deletions, $"Not Qualified User Try To Delete Some Admin. Number Id: {admin.Id} ({admin.User_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Deletions, $"Not Qualified User Tried To Delete Some Admin. Id: {admin.Id} ({admin.User_Name}).", false);
         }
 
         // Remove Some Airline Company.
@@ -136,17 +136,17 @@ namespace FlightManagementProject.Facade
                 {
                     _airlineDAO.Remove(airline);
                     _userDAO.RemoveUserName(airlineUser);
-                    _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Deletions, $"Admin {token.User.User_Name} Try To Delete Some Admin. Number Id: {airline.Id} ({airline.User_Name}).", true);
+                    _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Deletions, $"Admin {token.User.User_Name} Tried Delete Some Admin. Id: {airline.Id} ({airline.User_Name}).", true);
 
                 }
                 else
                 {
-                    _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Deletions, $"Admin {token.User.User_Name} Try To Delete Some Admin. Number Id: {airline.Id} ({airline.User_Name}).", false);
-                    throw new UserNotExistException($"Sorry, But '{airline.User_Name}' Is Not Exist.");
+                    _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Deletions, $"Admin {token.User.User_Name} Tried Delete Some Admin. Id: {airline.Id} ({airline.User_Name}).", false);
+                    throw new UserNotExistException($"Sorry, But '{airline.User_Name}' Does Not Exist.");
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Deletions, $"Anonymous User Try To Delete Some Airline Comapny. Number Id: {airline.Id} ({airline.User_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Deletions, $"Anonymous User Tried Delete Some Airline Comapny. Id: {airline.Id} ({airline.User_Name}).", false);
         }
 
         //Remove Some Customer.
@@ -159,17 +159,17 @@ namespace FlightManagementProject.Facade
                 {
                     _customerDAO.Remove(customer);
                     _userDAO.RemoveUserName(customerUser);
-                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Deletions, $"Admin {token.User.User_Name} Try To Delete Some Admin. Number Id: {customer.Id} ({customer.User_Name}).", true);
+                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Deletions, $"Admin {token.User.User_Name} Tried Delete Some Admin. Id: {customer.Id} ({customer.User_Name}).", true);
                 }
                 else
                 {
-                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Deletions, $"Admin {token.User.User_Name} Try To Delete Some Admin. Number Id: {customer.Id} ({customer.User_Name}).", false);
-                    throw new UserNotExistException($"Sorry, But '{customer.User_Name}' Is Not Exist.");
+                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Deletions, $"Admin {token.User.User_Name} Tried Delete Some Admin. Id: {customer.Id} ({customer.User_Name}).", false);
+                    throw new UserNotExistException($"Sorry, But '{customer.User_Name}' Does Not Exist.");
                 }
-                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Deletions, $"Admin {token.User.User_Name} Try To Delete Some Admin. Number Id: {customer.Id} ({customer.User_Name}).", customerUser != null);
+                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Deletions, $"Admin {token.User.User_Name} Tried Delete Some Admin. Id: {customer.Id} ({customer.User_Name}).", customerUser != null);
             }
             else
-                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Deletions, $"Anonymous User Try To Delete Some Airline Comapny. Number Id: {customer.Id} ({customer.User_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Deletions, $"Anonymous User Tried Delete Some Airline Comapny. Id: {customer.Id} ({customer.User_Name}).", false);
         }
 
         //Remove Some Country.
@@ -179,38 +179,46 @@ namespace FlightManagementProject.Facade
             {
                 if (_countryDAO.Remove(country))
                 {
-                    _backgroundDAO.AddNewAction(Categories.Countries | Categories.Deletions, $"Admin {token.User.User_Name} Try To Delete Some Country. Number Id: {country.Id} ({country.Country_Name}).", true);
+                    _backgroundDAO.AddNewAction(Categories.Countries | Categories.Deletions, $"Admin {token.User.User_Name} Tried Delete Some Country. Id: {country.Id} ({country.Country_Name}).", true);
                 }
                 else
                 {
-                    _backgroundDAO.AddNewAction(Categories.Countries | Categories.Deletions, $"Admin {token.User.User_Name} Try To Delete Some Country. Number Id: {country.Id} ({country.Country_Name}).", false);
-                    throw new UserNotExistException($"Sorry, But '{country.Country_Name}' Is Not Exist.");
+                    _backgroundDAO.AddNewAction(Categories.Countries | Categories.Deletions, $"Admin {token.User.User_Name} Tried Delete Some Country. Id: {country.Id} ({country.Country_Name}).", false);
+                    throw new UserNotExistException($"Sorry, But '{country.Country_Name}' Does Not Exist.");
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.Countries | Categories.Deletions, $"Anonymous User Try To Delete Some Country. Number Id: {country.Id} ({country.Country_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.Countries | Categories.Deletions, $"Anonymous User Tried Delete Some Country. Id: {country.Id} ({country.Country_Name}).", false);
         }
 
         // Update Details For Some Administrator.
         public void UpdateAdminDetails(LoginToken<Administrator> token, Administrator admin)
         {
-            if (admin != null && ReferenceEquals(token.User.User_Name, admin.User_Name) || token.User.User_Name.ToUpper() == FlyingCenterConfig.ADMIN_NAME)
+            if (UserIsValid(token))
             {
-                User adminUser = _userDAO.GetUserByUserName(admin.User_Name);
-                if (adminUser != null)
+                if (admin != null && ReferenceEquals(token.User.User_Name, admin.User_Name) || token.User.User_Name.ToUpper() == FlyingCenterConfig.ADMIN_NAME)
                 {
-                    _userDAO.UpdateUserName(adminUser.UserName, admin.User_Name);
-                    _adminDAO.Update(admin);
-                    _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Updates, $"Admin: {token.User.User_Name} Try To Update Some Admin. Number Id: {admin.Id} ({admin.User_Name}).", true);
+                    User adminUser = _userDAO.GetUserById(admin.Id);
+                    if (adminUser != null)
+                    {
+                         if(admin.User_Name != FlyingCenterConfig.ADMIN_NAME)
+                        _userDAO.UpdateUserName(adminUser.UserName, admin.User_Name);
+                         else
+                            throw new CentralAdministratorException("The UserName Cannot Be Changed To The Same Name As The  Central Administrator UserName.");
+                        _adminDAO.Update(admin);
+                        _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Updates, $"Admin: {token.User.User_Name} Tried Update Some Admin. Id: {admin.Id} ({admin.User_Name}).", true);
+                    }
+                    else
+                    {
+                        _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Updates, $"Admin: {token.User.User_Name} Tried Update Some Admin. Id: {admin.Id} ({admin.User_Name}).", false);
+                        throw new UserNotExistException($"Sorry, But '{admin.User_Name}' Does Not Exist.");
+                    }
                 }
-                else
-                {
-                    _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Updates, $"Admin: {token.User.User_Name} Try To Update Some Admin. Number Id: {admin.Id} ({admin.User_Name}).", false);
-                    throw new UserNotExistException($"Sorry, But '{admin.User_Name}' Is Not Exist.");
-                }
+                _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Updates, $"Not Qualified User Tried Update Some Admin. Id: {admin.Id} ({admin.User_Name}).", false);
+                throw new CentralAdministratorException("Only Central Administrator Or Who Updateds Himself Can Update Details.");
             }
-            _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Updates, $"Not Qualified User Try To Update Some Admin. Number Id: {admin.Id} ({admin.User_Name}).", false);
-            throw new CentralAdministratorActionsException("Only Central Administrator Or Who Updateds Himself Can Update Details");
+            else
+                _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Updates, $"Anonymous User Tried Update Some Admin. Id: {admin.Id} ({admin.User_Name}).", false);
         }
 
         // Update Details For Some Airline Company.
@@ -218,7 +226,7 @@ namespace FlightManagementProject.Facade
         {
             if (UserIsValid(token) && airline != null)
             {
-                User airlineUser = _userDAO.GetUserByUserName(airline.User_Name);
+                User airlineUser = _userDAO.GetUserById(airline.Id);
                 if (airlineUser != null)
                 {
                     _userDAO.UpdateUserName(airlineUser.UserName, airline.User_Name);
@@ -229,7 +237,7 @@ namespace FlightManagementProject.Facade
                 else
                 {
                     _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Updates, $"Admin: {token.User.User_Name} Tried To Update Details For Some Airline Company. Id: {airline.Id} ({airline.User_Name}).", false);
-                    throw new UserNotExistException($"Sorry, But '{airline.User_Name}' Is Not Exist.");
+                    throw new UserNotExistException($"Sorry, But '{airline.User_Name}' Does Not Exist.");
                 }
             }
             else
@@ -241,22 +249,22 @@ namespace FlightManagementProject.Facade
         {
             if (UserIsValid(token) && customer != null)
             {
-                User customerUser = _userDAO.GetUserByUserName(customer.User_Name);
+                User customerUser = _userDAO.GetUserById(customer.Id);
                 if (customerUser != null)
                 {
                     _userDAO.UpdateUserName(customerUser.UserName, customer.User_Name);
                     _customerDAO.Update(customer);
-                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Admin: {token.User.User_Name} Tried To Update Some Customer. Number Id: {customer.Id} ({customer.User_Name}).", true);
+                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Admin: {token.User.User_Name} Tried To Update Some Customer. Id: {customer.Id} ({customer.User_Name}).", true);
 
                 }
                 else
                 {
-                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Admin: {token.User.User_Name} Tried To Update Some Customer. Number Id: {customer.Id} ({customer.User_Name}).", false);
-                    throw new UserNotExistException($"Sorry, But '{customer.User_Name}' Is Not Exist.");
+                    _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Admin: {token.User.User_Name} Tried To Update Some Customer. Id: {customer.Id} ({customer.User_Name}).", false);
+                    throw new UserNotExistException($"Sorry, But '{customer.User_Name}' Does Not Exist.");
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Anonymous User Tried To Update Some Customer. Number Id: {customer.Id} ({customer.User_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Anonymous User Tried To Update Some Customer. Id: {customer.Id} ({customer.User_Name}).", false);
         }
 
         // Update Details For Some Country.
@@ -266,16 +274,16 @@ namespace FlightManagementProject.Facade
             {
                 if (_countryDAO.Update(country))
                 {
-                    _backgroundDAO.AddNewAction(Categories.Countries | Categories.Updates, $"Admin: {token.User.User_Name} Tried To Update Some Country. Number Id: {country.Id} ({country.Country_Name}).", true);
+                    _backgroundDAO.AddNewAction(Categories.Countries | Categories.Updates, $"Admin: {token.User.User_Name} Tried To Update Some Country. Id: {country.Id} ({country.Country_Name}).", true);
                 }
                 else
                 {
-                    _backgroundDAO.AddNewAction(Categories.Countries | Categories.Updates, $"Admin: {token.User.User_Name} Tried To Update Some Country. Number Id: {country.Id} ({country.Country_Name}).", false);
-                    throw new ArgumentException($"Sorry, But This Country Is Not Exist.");
+                    _backgroundDAO.AddNewAction(Categories.Countries | Categories.Updates, $"Admin: {token.User.User_Name} Tried To Update Some Country. Id: {country.Id} ({country.Country_Name}).", false);
+                    throw new ArgumentException($"Sorry, But This Country Does Not Exist.");
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.Countries | Categories.Updates, $"Anonymous User Tried To Update Some Country. Number Id: {country.Id} ({country.Country_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.Countries | Categories.Updates, $"Anonymous User Tried To Update Some Country. Id: {country.Id} ({country.Country_Name}).", false);
         }
 
         // Try Change Password For Admin.
@@ -284,7 +292,7 @@ namespace FlightManagementProject.Facade
             if (token.User.User_Name == FlyingCenterConfig.ADMIN_NAME)
             {
                 _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Updates, $"{token.User.User_Name} Tried To Change His Password.", false);
-                throw new CentralAdministratorActionsException("It's Not possible To Change Password For Central Administrator");
+                throw new CentralAdministratorException("It's Not possible To Change Password For Central Administrator");
             }
             if (UserIsValid(token))
             {
@@ -304,7 +312,7 @@ namespace FlightManagementProject.Facade
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Updates, $"Anonymous User Tried To Change Password For Some Admin. Number Id: {token.User.Id} ({token.User.User_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.Administrators | Categories.Updates, $"Anonymous User Tried To Change Password For Some Admin. Id: {token.User.Id} ({token.User.User_Name}).", false);
 
         }
 
@@ -328,7 +336,7 @@ namespace FlightManagementProject.Facade
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Updates, $"Anonymous User Tried To Change Password In Force For Some Airline Company. Number Id: {airline.Id} ({airline.User_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.AirlineCompanies | Categories.Updates, $"Anonymous User Tried To Change Password In Force For Some Airline Company. Id: {airline.Id} ({airline.User_Name}).", false);
         }
 
         // Force Change Password For Some Customer.
@@ -351,7 +359,7 @@ namespace FlightManagementProject.Facade
                 }
             }
             else
-                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Anonymous User Tried To Change Password In Force For Some Customer. Number Id: {customer.Id} ({customer.User_Name}).", false);
+                _backgroundDAO.AddNewAction(Categories.Customers | Categories.Updates, $"Anonymous User Tried To Change Password In Force For Some Customer. Id: {customer.Id} ({customer.User_Name}).", false);
 
         }
 
@@ -389,21 +397,6 @@ namespace FlightManagementProject.Facade
             if (UserIsValid(token))
             {
                 airline = _airlineDAO.GetById(id);
-            }
-            return airline;
-        }
-
-        // Search Airline Company By UserName.
-        public AirlineCompany GetAirlineByUserName(LoginToken<Administrator> token, string userName)
-        {
-            AirlineCompany airline = null;
-            if (UserIsValid(token))
-            {
-                User airlineUser = _userDAO.GetUserByUserName(userName);
-                if(airlineUser != null)
-                {
-                   airline = _airlineDAO.GetById(airlineUser.Id);
-                }
             }
             return airline;
         }

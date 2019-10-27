@@ -13,8 +13,6 @@ namespace FlightManagementProject.DAO
     // Class With All Funtions(Of Airline) For MSSQL Data Base.
     internal class AirlineDAOMSSQL : IAirlineDAO
     {
-        IUserDAO _backgroundDAO = new UserDAOMSSQL();
-
         //====== Crud Commands ======//
 
         // Add New Airline Company.
