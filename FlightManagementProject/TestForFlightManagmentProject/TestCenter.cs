@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using FlightManagementProject.Facade;
 using FlightManagementProject;
+using FlightManagementProject.Poco_And_User;
 
 namespace TestForFlightManagmentProject
 {
@@ -29,7 +30,7 @@ namespace TestForFlightManagmentProject
             airlineFacade = new LoggedInAirlineFacade();
             airlineToken = new LoginToken<AirlineCompany> { User = new AirlineCompany("TestAirline", "Airline " + UserTest(), "123", (int)adminFacade.GetCountryByName("Israel").Id)};
             adminFacade.CreateNewAirline(adminToken, airlineToken.User);
-            airlineToken.User = adminFacade.GetAirlineByUserName(adminToken, airlineToken.User.User_Name);
+            airlineToken.User = adminFacade.GetAirlineByUserName(airlineToken.User.User_Name);
 
             customerFacade = new LoggedInCustomerFacade();
             customerToken = new LoginToken<Customer> { User = new Customer("TestCustomer", "Ben Sadon", UserTest(), "123", "Neria 28", "050", "3317") };
@@ -39,7 +40,14 @@ namespace TestForFlightManagmentProject
         // Create Random User Names For Tests.
         public string UserTest()
         {
-            return "Test" + new Random().Next(100000);
+            string userName =  "Test" + new Random().Next(100000);
+            Administrator admin = adminFacade.GetAdminByUserName(adminToken, userName);
+            while (admin != null)
+            {
+                userName = "Test" + new Random().Next(100000);
+                admin = adminFacade.GetAdminByUserName(adminToken, userName);
+            }
+            return userName;
         }
 
         //Remove All The Tables In DataBase And Add New Country.
