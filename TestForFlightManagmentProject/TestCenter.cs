@@ -30,7 +30,7 @@ namespace TestForFlightManagmentProject
             airlineFacade = new LoggedInAirlineFacade();
             airlineToken = new LoginToken<AirlineCompany> { User = new AirlineCompany("TestAirline", "Airline " + UserTest(), "123", (int)adminFacade.GetCountryByName("Israel").Id)};
             adminFacade.CreateNewAirline(adminToken, airlineToken.User);
-            airlineToken.User = adminFacade.GetAirlineByUserName(adminToken, airlineToken.User.User_Name);
+            airlineToken.User = adminFacade.GetAirlineByUserName(airlineToken.User.User_Name);
 
             customerFacade = new LoggedInCustomerFacade();
             customerToken = new LoginToken<Customer> { User = new Customer("TestCustomer", "Ben Sadon", UserTest(), "123", "Neria 28", "050", "3317") };

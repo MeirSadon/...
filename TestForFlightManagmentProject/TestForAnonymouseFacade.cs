@@ -55,7 +55,7 @@ namespace TestForFlightManagmentProject
         public void GetFlightById()
         {
             tc.PrepareDBForTests();
-            Flight flight = new Flight { AirLineCompany_Id = tc.airlineToken.User.Id, Departure_Time = DateTime.Now, Landing_Time = DateTime.Now + TimeSpan.FromHours(1),
+            Flight flight = new Flight { AirlineCompany_Id = tc.airlineToken.User.Id, Departure_Time = DateTime.Now, Landing_Time = DateTime.Now + TimeSpan.FromHours(1),
                 Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 10 };
             flight.Id = tc.airlineFacade.CreateFlight(tc.airlineToken, flight);
             Assert.AreEqual(tc.airlineFacade.GetFlightById((int)flight.Id), flight);
@@ -66,9 +66,9 @@ namespace TestForFlightManagmentProject
         public void GetAllFlightsVacancy()
         {
             tc.PrepareDBForTests();
-            Flight flight = new Flight { AirLineCompany_Id = tc.airlineToken.User.Id, Departure_Time = DateTime.Now, Landing_Time = DateTime.Now + TimeSpan.FromHours(1), 
+            Flight flight = new Flight { AirlineCompany_Id = tc.airlineToken.User.Id, Departure_Time = DateTime.Now, Landing_Time = DateTime.Now + TimeSpan.FromHours(1), 
                 Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 10 };
-            Flight flight2 = new Flight { AirLineCompany_Id = tc.airlineToken.User.Id, Departure_Time = DateTime.Now, Landing_Time = DateTime.Now + TimeSpan.FromHours(1),
+            Flight flight2 = new Flight { AirlineCompany_Id = tc.airlineToken.User.Id, Departure_Time = DateTime.Now, Landing_Time = DateTime.Now + TimeSpan.FromHours(1),
                 Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 0 };
             flight.Id = tc.airlineFacade.CreateFlight(tc.airlineToken, flight);
             flight2.Id = tc.airlineFacade.CreateFlight(tc.airlineToken, flight2);
@@ -83,7 +83,7 @@ namespace TestForFlightManagmentProject
             tc.PrepareDBForTests();
             Flight flight = new Flight
             {
-                AirLineCompany_Id = tc.airlineToken.User.Id,
+                AirlineCompany_Id = tc.airlineToken.User.Id,
                 Departure_Time = DateTime.Now,
                 Landing_Time = DateTime.Now + TimeSpan.FromHours(4),
                 Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id,
@@ -99,7 +99,7 @@ namespace TestForFlightManagmentProject
         public void GetFlightsByLandingDate()
         {
             tc.PrepareDBForTests();
-            Flight flight = new Flight { AirLineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2018, 10, 05), Landing_Time = new DateTime(2018, 10, 08),
+            Flight flight = new Flight { AirlineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2018, 10, 05), Landing_Time = new DateTime(2018, 10, 08),
                 Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 10 };
             flight.Id = tc.airlineFacade.CreateFlight(tc.airlineToken, flight);
             Assert.AreEqual(tc.airlineFacade.GetFlightsByLandingDate(new DateTime(2018, 10, 08))[0], flight);
@@ -110,7 +110,7 @@ namespace TestForFlightManagmentProject
         public void GetFlightsByOriginCountry()
         {
             tc.PrepareDBForTests();
-            Flight flight = new Flight { AirLineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2018, 10, 05), Landing_Time = new DateTime(2018, 10, 08),
+            Flight flight = new Flight { AirlineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2018, 10, 05), Landing_Time = new DateTime(2018, 10, 08),
                 Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 10 };
             flight.Id = tc.airlineFacade.CreateFlight(tc.airlineToken, flight);
             Assert.AreEqual(tc.adminFacade.GetFlightsByOriginCountry((int)tc.adminFacade.GetCountryByName("Israel").Id).Count, 1);
@@ -121,7 +121,7 @@ namespace TestForFlightManagmentProject
         public void GetFlightsByDestinationCountry()
         {
             tc.PrepareDBForTests();
-            Flight flight = new Flight { AirLineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2018, 10, 05), Landing_Time = new DateTime(2018, 10, 08),
+            Flight flight = new Flight { AirlineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2018, 10, 05), Landing_Time = new DateTime(2018, 10, 08),
                 Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 10 };
             flight.Id = tc.airlineFacade.CreateFlight(tc.airlineToken, flight);
             Assert.AreEqual(tc.adminFacade.GetFlightsByDestinationCountry((int)tc.adminFacade.GetCountryByName("Israel").Id).Count, 1);
@@ -132,7 +132,7 @@ namespace TestForFlightManagmentProject
         public void GetAllFlights()
         {
             tc.PrepareDBForTests();
-            Flight flight = new Flight { AirLineCompany_Id = tc.airlineToken.User.Id, Departure_Time = DateTime.Now, Landing_Time = DateTime.Now + TimeSpan.FromHours(1),
+            Flight flight = new Flight { AirlineCompany_Id = tc.airlineToken.User.Id, Departure_Time = DateTime.Now, Landing_Time = DateTime.Now + TimeSpan.FromHours(1),
                 Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 100 };
             flight.Id = tc.airlineFacade.CreateFlight(tc.airlineToken, flight);
             IList<Flight> flights = new AnonymousUserFacade().GetAllFlights();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FlightManagementProject;
+using FlightManagementProject.DAO;
 using FlightManagementProject.Facade;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -17,6 +18,7 @@ namespace TestForFlightManagmentProject
         4. PurchaseTicket        -- CancelTicketSuccessfuly.
         5. MofidyCustomerDetails -- "TestForAdminFacadeClass"(UpdateCustomer).
         6. ChangeMyPassword      -- ChangePasswordForCustomer + WrongPasswordWhenTryChangePasswordForCustomer.
+        7. GetTicketById         -- GetTicketById + TicketNotMatchWhenTryGetTicketThatNotMatchToCurrentCustomer.
 
         ======= All Tests ======= */
 
@@ -26,7 +28,7 @@ namespace TestForFlightManagmentProject
         public void CancelTicketSuccessfuly()
         {
             tc.PrepareDBForTests();
-            Flight flight = new Flight { AirLineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2020,12,10, 00, 00, 00), Landing_Time = new DateTime(2020, 12, 11), Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 100 };
+            Flight flight = new Flight { AirlineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2020,12,10, 00, 00, 00), Landing_Time = new DateTime(2020, 12, 11), Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 100 };
             flight.Id = tc.airlineFacade.CreateFlight(tc.airlineToken, flight);
             tc.customerFacade.PurchaseTicket(tc.customerToken, flight);
             Assert.AreEqual(tc.customerFacade.GetAllMyFlights(tc.customerToken).Count, 1);
@@ -40,7 +42,7 @@ namespace TestForFlightManagmentProject
         public void TooLateToCancelTicketWhenTryCancelTicket()
         {
             tc.PrepareDBForTests();
-            Flight flight = new Flight { AirLineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2019, 07, 05), Landing_Time = new DateTime(2019, 11, 05), Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 100 };
+            Flight flight = new Flight { AirlineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2019, 07, 05), Landing_Time = new DateTime(2019, 11, 05), Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 100 };
             flight.Id = tc.airlineFacade.CreateFlight(tc.airlineToken, flight);
             tc.customerFacade.PurchaseTicket(tc.customerToken, flight);
             tc.customerFacade.CancelTicket(tc.customerToken, tc.customerFacade.GetAllMyTickets(tc.customerToken)[0]);
@@ -62,6 +64,35 @@ namespace TestForFlightManagmentProject
         {
             tc.PrepareDBForTests();
             tc.customerFacade.ChangeMyPassword(tc.customerToken, "123456", "newPassword");
+        }
+
+        // Try To Get Ticket From Ticket List Of Current Customer.
+        [TestMethod]
+        public void GetTicketById()
+        {
+            tc.PrepareDBForTests();
+            Flight flight = new Flight { AirlineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2020, 12, 10, 00, 00, 00), Landing_Time = new DateTime(2020, 12, 11), Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 100 };
+            flight.Id = tc.airlineFacade.CreateFlight(tc.airlineToken, flight);
+            long newId = tc.customerFacade.PurchaseTicket(tc.customerToken, flight);
+            Ticket ticket = tc.customerFacade.GetPurchasedTicketById(tc.customerToken, (int)newId);
+            Assert.AreEqual(ticket.Customer_Id, tc.customerToken.User.Id);
+        }
+
+        // Try To Get Ticket From Ticket List Of Current Customer.
+        [TestMethod]
+        [ExpectedException(typeof(TicketNotMatchException))]
+        public void TicketNotMatchWhenTryGetTicketThatNotMatchToCurrentCustomer()
+        {
+            tc.PrepareDBForTests();
+            Customer customer = new Customer("Shiran", "Ben Sadon", tc.UserTest(), "123", "Neria 28", "050", "3317");
+            customer.Customer_Number = tc.adminFacade.CreateNewCustomer(tc.adminToken, customer);
+            FlyingCenterSystem.GetUserAndFacade(customer.User_Name, "123", out ILogin token, out FacadeBase facade);
+            LoginToken<Customer> newToken = token as LoginToken<Customer>;
+            LoggedInCustomerFacade newfacade = facade as LoggedInCustomerFacade;
+            Flight flight = new Flight { AirlineCompany_Id = tc.airlineToken.User.Id, Departure_Time = new DateTime(2020, 12, 10, 00, 00, 00), Landing_Time = new DateTime(2020, 12, 11), Origin_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Destination_Country_Code = tc.adminFacade.GetCountryByName("Israel").Id, Remaining_Tickets = 100 };
+            flight.Id = tc.airlineFacade.CreateFlight(tc.airlineToken, flight);
+            long newId = tc.customerFacade.PurchaseTicket(tc.customerToken, flight);
+            newfacade.GetPurchasedTicketById(newToken, (int)newId);
         }
     }
 }

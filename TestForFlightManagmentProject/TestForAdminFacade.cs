@@ -27,11 +27,10 @@ namespace TestForFlightManagmentProject
            14. ForceChangePasswordForCustomer -- ChangePasswordForSomeCustomer.
            15. GetAdminByUserName             -- GetAdminByUserName.
            16. GetAdminById                   -- GetAdminById.
-           17. GetAirlineByUserName           -- GetAirlineByUserName.
-           18. GetAirlineById                 -- GetAirlineById.
-           19. GetCustomerByUserName          -- GetCustomerByUserName.
-           20. GetCustomerById                -- GetCustomerById.
-           20. GetAllCustomers                -- GetAllCustomers.
+           17. GetAirlineById                 -- GetAirlineById.
+           18. GetCustomerByUserName          -- GetCustomerByUserName.
+           19. GetCustomerById                -- GetCustomerById.
+           21. GetAllCustomers                -- GetAllCustomers.
 
 
            ========   All Tests ======== */
@@ -60,7 +59,7 @@ namespace TestForFlightManagmentProject
             AirlineCompany airline = new AirlineCompany("AirlineForUpdate", "Airline " + tc.UserTest(), "123", (int)tc.adminFacade.GetCountryByName("Israel").Id);
             airline.Airline_Number = tc.adminFacade.CreateNewAirline(tc.adminToken, airline);
             tc.adminFacade.RemoveAirline(tc.adminToken, airline);
-            Assert.AreEqual(tc.adminFacade.GetAirlineByUserName(tc.adminToken, airline.User_Name), null);
+            Assert.AreEqual(tc.adminFacade.GetAirlineByUserName(airline.User_Name), null);
         }
 
         // Remove Customer Successfully.
@@ -137,7 +136,7 @@ namespace TestForFlightManagmentProject
             airline.Airline_Number = tc.adminFacade.CreateNewAirline(tc.adminToken, airline);
             airline.Airline_Name = "CHANGED!";
             tc.adminFacade.UpdateAirlineDetails(tc.adminToken, airline);
-            Assert.AreEqual(tc.adminFacade.GetAirlineByUserName(tc.adminToken, airline.User_Name).Airline_Name, "CHANGED!");
+            Assert.AreEqual(tc.adminFacade.GetAirlineByUserName(airline.User_Name).Airline_Name, "CHANGED!");
         }
 
         // Update Details For Customer.
@@ -190,7 +189,7 @@ namespace TestForFlightManagmentProject
             AirlineCompany airline = new AirlineCompany("AirlineForUpdate", "Airline " + tc.UserTest(), "123", (int)tc.adminFacade.GetCountryByName("Israel").Id);
             airline.Airline_Number = tc.adminFacade.CreateNewAirline(tc.adminToken, airline);
             tc.adminFacade.ForceChangePasswordForAirline(tc.adminToken,airline, "newPassword".ToUpper());
-            Assert.AreEqual(tc.adminFacade.GetAirlineByUserName(tc.adminToken, airline.User_Name).Password, "newPassword".ToUpper());
+            Assert.AreEqual(tc.adminFacade.GetAirlineByUserName(airline.User_Name).Password, "newPassword".ToUpper());
         }
 
         // Change Password Successfuly For Customer.
@@ -208,7 +207,7 @@ namespace TestForFlightManagmentProject
 
         // Supposed To Get "WrongPasswordException" When Try Change Password For Central Administrator.
         [TestMethod]
-        [ExpectedException(typeof(CentralAdministratorActionsException))]
+        [ExpectedException(typeof(CentralAdministratorException))]
         public void WrongPasswordWhenTryChangePasswordForCentralAdmin()
         {
             tc.PrepareDBForTests();
@@ -250,16 +249,6 @@ namespace TestForFlightManagmentProject
             Administrator admin = new Administrator("Admin: " + tc.UserTest(), "123");
             admin.Admin_Number = tc.adminFacade.CreateNewAdmin(tc.adminToken, admin);
             Assert.AreNotEqual(tc.adminFacade.GetAdminById(tc.adminToken, (int)admin.Id), null);
-        }
-
-        // Search Some Airline By User Name.
-        [TestMethod]
-        public void GetAirlineByUserName()
-        {
-            tc.PrepareDBForTests();
-            AirlineCompany airline = new AirlineCompany("AirlineForUpdate", "Airline " + tc.UserTest(), "123", (int)tc.adminFacade.GetCountryByName("Israel").Id);
-            airline.Airline_Number = tc.adminFacade.CreateNewAirline(tc.adminToken, airline);
-            Assert.AreNotEqual(tc.adminFacade.GetAirlineByUserName(tc.adminToken, airline.User_Name), null);
         }
 
         // Search Some Airline By Id.
